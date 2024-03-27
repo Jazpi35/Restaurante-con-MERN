@@ -1,0 +1,68 @@
+{
+  "usuarios": [
+    {
+      "id": "0049428c-b78b-46c6-9832-7885bf0782ae",
+      "user": "prueba4@unicatolica.edu",
+      "nombre": "prueab4",
+      "password": "$2a$10$y8DQmv4IagURZ5FHz0hXBu/W5k7aK0n.vrPlTlFqJxhYz341wiiOS",
+      "rol": "ADMIN_ROLE",
+      "estado": false
+    },
+    {
+      "id": "01996683-a9bb-428a-ac7d-25a797090386",
+      "user": "mesero@unicatolica.edu.co",
+      "nombre": "prueba5",
+      "password": "$2a$10$6hpGJboyMtjPOmCaJ.pNDum9rVr6RPeNmFHJ0Itnyy6vNPhP4I/iW",
+      "rol": "USER_ROLE",
+      "estado": true
+    },
+    {
+      "id": "8c1b67f4-009e-4607-8c4f-fa91acf6fb36",
+      "user": "prueba1@unicatolica.edu",
+      "nombre": "prueba5",
+      "password": "$2a$10$O69ZgB9fAguK5yhktuweoO5Iz2wnPjTl1JEJm2SGrre5CLGx4O6jG",
+      "rol": "USER_ROLE",
+      "estado": false
+    },
+    {
+      "id": "177f8576-e54f-4957-a9a1-11df8853bb4b",
+      "user": "test1@unicatolica.edu.co",
+      "nombre": "Administrador ",
+      "password": "$2a$10$1WWXCX.UD4OeRqqUbbQ7buaKjqZowX/DnjOJQWOWzMuMlR/Ffha1i",
+      "rol": "ADMIN_ROLE",
+      "estado": false
+    },
+    {
+      "id": "64b8c5ad-89bc-4044-ac68-c20d3055b5fe",
+      "user": "prueba1@unicatolica.com",
+      "nombre": "prueba1 ",
+      "password": "$2a$10$gjPugNIsMgy8apvQGe9iheAk/iqDY.xowWXU0XthwJFhND1flTx1W",
+      "rol": "ADMIN_ROLE",
+      "estado": true
+    },
+    {
+      "id": "e6dea106-2f81-4a0f-9f06-5b22548c5a13",
+      "user": "prueba6@meseros.ocm",
+      "nombre": "mesero practicas",
+      "password": "$2a$10$15EI0tfKm92IV2u7MXpDyu8NIXOU25Kfw2o2xT9HaG26Dhv06Z6w.",
+      "rol": "USER_ROLE",
+      "estado": false
+    },
+    {
+      "id": "f5e08f89-57f3-4979-96ac-435c8fb6de93",
+      "user": "prueba1@unicatolica.edu.co",
+      "nombre": "meser prueba ",
+      "password": "$2a$10$bxBgyW9XqNdNLDt9MKkBSe5XJQdkggU1uE1rY.rEtzfLHI33AqI9a",
+      "rol": "ADMIN_ROLE",
+      "estado": true
+    },
+    {
+      "id": "92fda080-1126-4eba-a459-ccbdc2a96b34",
+      "user": "mesero@prueba.com",
+      "nombre": "mesero 1 ",
+      "password": "$2a$10$6OdmPQW0JD5juVMr9wkupOAs8qETqQFgNY9rKNPdMQRI8catHz.cS",
+      "rol": "USER_ROLE",
+      "estado": true
+    }
+  ]
+}
