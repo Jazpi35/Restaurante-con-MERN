@@ -7,58 +7,16 @@
       "estado": false
     },
     {
-      "id": "2a7f0718-6a7f-45cc-917c-c18da9eda621",
-      "producto": "manzana",
-      "valor": "1000",
-      "estado": false
-    },
-    {
-      "id": "2fa45ead-b935-42fd-ba41-d24809b9a423",
-      "producto": "manzanas",
-      "valor": "1000",
-      "estado": false
-    },
-    {
-      "id": "2ea90ac5-6d40-4364-ae61-0fc697decc9f",
-      "producto": "ponymalta",
-      "valor": "10000",
-      "estado": false
-    },
-    {
-      "id": "26d85041-3a62-4c59-ae35-6c9f20e2641b",
-      "producto": "cigarrillos",
-      "valor": "10000",
-      "estado": false
-    },
-    {
-      "id": "4920456b-0715-47fb-938e-3575468751a3",
-      "producto": "Malboro",
-      "valor": "5000",
-      "estado": false
-    },
-    {
-      "id": "fe841df4-284f-4cc7-aa5b-2599de945ee5",
-      "producto": "boston",
-      "valor": "5000",
-      "estado": false
-    },
-    {
-      "id": "4c8f44c8-c26d-425b-873d-c74955c90d08",
-      "producto": "frijoles",
-      "valor": "10000",
-      "estado": false
-    },
-    {
       "id": "5e05615f-1770-4247-a2a2-a21938fe9e46",
-      "producto": "canarios",
+      "producto": "Carne asada",
       "valor": "5000",
       "estado": true
     },
     {
-      "id": "b5a32d04-c50b-4465-b5e1-39289ab59ac8",
-      "producto": "natilla",
-      "valor": "5000",
-      "estado": false
+      "id": "0af7bb7f-c9da-4c93-8b79-9dd48cd7c69e",
+      "producto": "Huevos",
+      "valor": "15000",
+      "estado": true
     }
   ]
 }

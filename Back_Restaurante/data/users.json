@@ -14,7 +14,7 @@
       "nombre": "prueba5",
       "password": "$2a$10$6hpGJboyMtjPOmCaJ.pNDum9rVr6RPeNmFHJ0Itnyy6vNPhP4I/iW",
       "rol": "USER_ROLE",
-      "estado": true
+      "estado": false
     },
     {
       "id": "8c1b67f4-009e-4607-8c4f-fa91acf6fb36",
@@ -54,7 +54,7 @@
       "nombre": "meser prueba ",
       "password": "$2a$10$bxBgyW9XqNdNLDt9MKkBSe5XJQdkggU1uE1rY.rEtzfLHI33AqI9a",
       "rol": "ADMIN_ROLE",
-      "estado": true
+      "estado": false
     },
     {
       "id": "92fda080-1126-4eba-a459-ccbdc2a96b34",
