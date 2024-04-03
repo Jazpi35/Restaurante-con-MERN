@@ -1,20 +1,26 @@
 {
   "productos": [
     {
-      "id": "d55bfa47-f185-445f-bfd4-a4e91d1bd12e",
-      "producto": "manillas",
-      "valor": "1000",
-      "estado": false
-    },
-    {
-      "id": "5e05615f-1770-4247-a2a2-a21938fe9e46",
-      "producto": "Carne asada",
-      "valor": "5000",
+      "id": "d6b26c1d-2d29-46dd-a5ce-990225a2eae9",
+      "producto": "POLLO TERILLAQUI",
+      "valor": "50000",
       "estado": true
     },
     {
-      "id": "0af7bb7f-c9da-4c93-8b79-9dd48cd7c69e",
-      "producto": "Huevos",
+      "id": "98db4cfc-c8f4-4331-952d-95c4abdcb4e5",
+      "producto": "CARNE ASADA",
+      "valor": "15000",
+      "estado": true
+    },
+    {
+      "id": "4ce9dcba-63b8-449f-a20b-81348fe44a99",
+      "producto": "POLLO APANADO",
+      "valor": "50000",
+      "estado": true
+    },
+    {
+      "id": "844a0ef7-0876-4ce0-a82d-42a539ca7206",
+      "producto": "MONDONGO",
       "valor": "15000",
       "estado": true
     }

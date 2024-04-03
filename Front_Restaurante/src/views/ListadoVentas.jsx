@@ -9,7 +9,7 @@ const ListadoVentas = () => {
     const obtenerListVentas = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3500/v1/restaurante/getVentas"
+          "http://localhost:3500/api/ventas"
         );
         const data = await response.json();
         console.log(data.ventas);

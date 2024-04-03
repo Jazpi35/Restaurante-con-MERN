@@ -59,6 +59,16 @@
       "id": "24ba604a-b18c-4b62-b949-6efb1166b113",
       "producto": "Ajiaco",
       "cantidad": "7"
+    },
+    {
+      "id": 1,
+      "producto": "Carne asada",
+      "cantidad": 5
+    },
+    {
+      "id": 1,
+      "producto": "Carne asada",
+      "cantidad": 5
     }
   ]
 }

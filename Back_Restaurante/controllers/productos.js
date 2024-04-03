@@ -4,9 +4,11 @@ const path = require("path");
 
 // Crear un nuevo producto
 const crearProducto = async (req, res) => {
-  const { id, producto, valor, estado} = req.body;
+  
+  const { id, valor, estado} = req.body;
    
-  console.log("estoy recibiendo: ", id , producto, valor, estado);
+  //console.log("estoy recibiendo: ", id , producto, valor, estado);
+  const producto = req.body.producto.toUpperCase();
 
   try {
 

@@ -11,6 +11,7 @@ class Server {
             auth:  '/api/auth',//defino URL autenticacion - login
             productos: '/api/productos',
             usuarios: '/api/usuarios',
+            ventas: '/api/ventas'
         }
 
         //Middlewares
@@ -37,6 +38,7 @@ class Server {
         this.app.use( this.paths.auth, require('../routes/auth'));
         this.app.use( this.paths.usuarios, require('../routes/usuarios'));
         this.app.use( this.paths.productos, require('../routes/productos'));
+        this.app.use( this.paths.ventas, require('../routes/ventas'));
     }
 
     listen() {
