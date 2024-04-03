@@ -1,0 +1,32 @@
+{
+    "mesas": [
+      {
+        "id": "1",
+        "nombre":"MESA 1",
+        "Venta": "",
+        "valor": "",
+        "estado": true
+      },
+      {
+        "id": "2",
+        "nombre":"MESA 2",
+        "Venta": "",
+        "valor": "",
+        "estado": true
+      },
+      {
+        "id": "3",
+        "nombre":"MESA 3",
+        "Venta": "",
+        "valor": "",
+        "estado": true
+      },
+      {
+        "id": "4",
+        "nombre":"MESA 4",
+        "Venta": "",
+        "valor": "",
+        "estado": true
+      }
+    ]
+  }

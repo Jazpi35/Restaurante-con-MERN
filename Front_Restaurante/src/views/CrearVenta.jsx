@@ -6,6 +6,8 @@ import '../App.css'
 const CrearVenta = () => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
+  const [mesas, setMesas] = useState("");
+  const [mesaSeleccionado, setMesaSeleccionado] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
 
@@ -15,10 +17,10 @@ const CrearVenta = () => {
     if (productoSeleccionado !== "" && cantidad !== "") {
       const producto = productoSeleccionado
       const id = uuidv4(); // Genera un UUID único
-      console.log("id generado: ",id)
+      console.log("id generado: ", id)
       try {
         const response = await fetch(
-          "http://localhost:3500/v1/restaurante/crearVenta",
+          "http://localhost:3500/api/ventas",
           {
             method: "POST",
             headers: {
@@ -50,14 +52,28 @@ const CrearVenta = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       const response = await fetch(
-        "http://localhost:3500/v1/restaurante/getProductos"
+        "http://localhost:3500/api/productos"
       );
       const data = await response.json();
       setProductos(data.productos);
     };
-    console.log("prod. seleccionado:",productoSeleccionado)
+    console.log("prod. seleccionado:", productoSeleccionado)
 
-    obtenerProductos(); 
+    obtenerProductos();
+  }, []);
+
+  // Llamar al servidor y obtener la lista de mesas
+  useEffect(() => {
+    const obtenerMesas = async () => {
+      const response = await fetch(
+        "http://localhost:3500/api/mesas"
+      );
+      const data = await response.json();
+      setMesas(data.mesas);
+    };
+    console.log("prod. seleccionado:", mesaSeleccionado)
+
+    obtenerMesas();
   }, []);
 
   return (
@@ -68,7 +84,7 @@ const CrearVenta = () => {
         <h3>Crear Venta</h3>
 
         <select
-        className="form-select"
+          className="form-select"
           value={productoSeleccionado}
           onChange={(e) => setProductoSeleccionado(e.target.value)}
         >
@@ -79,14 +95,31 @@ const CrearVenta = () => {
             </option>
           ))}
         </select>
+
+
+        <select
+          className="form-select"
+          value={mesaSeleccionado}
+          onChange={(e) => setMesaSeleccionado(e.target.value)}
+        >
+          <option value="">Selecciona una mesa</option>
+          {mesas.map((mesa) => (
+            <option key={mesa.id} value={mesa.nombre}>
+              {mesa.nombre}
+            </option>
+          ))}
+
+        </select>
+
         <input
-        className="form-control"
+          className="form-control"
           type="number"
           name=""
           id=""
           placeholder="ingresa la Cantidad..."
           onChange={(e) => setCantidad(e.target.value)}
         />
+
         <div>
           <Link to="/">
             <button className="btn btn-secondary" >Regresar</button>

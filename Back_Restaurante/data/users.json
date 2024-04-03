@@ -2,7 +2,7 @@
   "usuarios": [
     {
       "id": "0049428c-b78b-46c6-9832-7885bf0782ae",
-      "user": "prueba1@prueba.com",
+      "user": "admin@prueba.com",
       "nombre": "prueba1",
       "password": "$2a$10$y8DQmv4IagURZ5FHz0hXBu/W5k7aK0n.vrPlTlFqJxhYz341wiiOS",
       "rol": "ADMIN_ROLE",

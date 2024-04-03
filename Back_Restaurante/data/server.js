@@ -9,6 +9,7 @@ class Server {
 
         this.paths = {
             auth:  '/api/auth',//defino URL autenticacion - login
+            mesas: '/api/mesas',
             productos: '/api/productos',
             usuarios: '/api/usuarios',
             ventas: '/api/ventas'
@@ -36,6 +37,7 @@ class Server {
 
     routes() {
         this.app.use( this.paths.auth, require('../routes/auth'));
+        this.app.use( this.paths.mesas, require('../routes/mesas'));
         this.app.use( this.paths.usuarios, require('../routes/usuarios'));
         this.app.use( this.paths.productos, require('../routes/productos'));
         this.app.use( this.paths.ventas, require('../routes/ventas'));

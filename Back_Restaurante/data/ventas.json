@@ -1,74 +1,24 @@
 {
   "ventas": [
     {
-      "id": "aa0b4a02-6d08-40ef-9973-934d3f4bf8b9",
-      "producto": "Lasagna",
+      "id": "c0b245b2-2037-45f3-b931-63e1ca5ba717",
+      "producto": "POLLO TERILLAQUI",
+      "cantidad": 55
+    },
+    {
+      "id": "228a8730-27f4-45c9-b60d-e385b4b31b23",
+      "producto": "CARNE ASADA",
       "cantidad": "2"
     },
     {
-      "id": "7501a9da-a49d-4817-999c-8d6610cd9d2f",
-      "producto": "Sancocho",
+      "id": "11fd8d15-a454-4a44-a4fe-11f1ddf2f119",
+      "producto": "POLLO APANADO",
       "cantidad": "2"
     },
     {
-      "id": "df4b7990-12c7-4909-842b-fbee227a6d27",
-      "producto": "Frijolada",
-      "cantidad": "3"
-    },
-    {
-      "id": "8452cb4b-83a0-41dd-8093-cd7a2251a14f",
-      "producto": "Ajiaco",
-      "cantidad": "5"
-    },
-    {
-      "id": "d2201fe0-96b4-4dcc-983c-8f7ecbe64fb7",
-      "producto": "Sopa",
-      "cantidad": "3"
-    },
-    {
-      "id": "5bd67de8-0813-4623-af5f-5f08f7e1020e",
-      "producto": "Galletas",
-      "cantidad": "1"
-    },
-    {
-      "id": "f87eeb6f-7339-4500-b4a5-88bca9481441",
-      "producto": "Frijolada",
+      "id": "0c83c629-8fcc-4ea1-9e08-1fe92dc9d693",
+      "producto": "MONDONGO",
       "cantidad": "2"
-    },
-    {
-      "id": "df7490d8-e0da-4c05-914e-303cced367a7",
-      "producto": "Ajiaco",
-      "cantidad": "2"
-    },
-    {
-      "id": "8ba0be27-c647-40c8-a165-fc4c3840c673",
-      "producto": "Frijolada",
-      "cantidad": "5"
-    },
-    {
-      "id": "37786a76-b666-4b9b-a390-10ca2b59d012",
-      "producto": "Frijolada",
-      "cantidad": "5"
-    },
-    {
-      "id": "742b19ad-0742-4479-b346-ffab686b04d3",
-      "producto": "Ajiaco",
-      "cantidad": "7"
-    },
-    {
-      "id": "24ba604a-b18c-4b62-b949-6efb1166b113",
-      "producto": "Ajiaco",
-      "cantidad": "7"
-    },
-    {
-      "id": 1,
-      "producto": "Carne asada",
-      "cantidad": 5
-    },
-    {
-      "id": 1,
-      "producto": "Carne asada",
-      "cantidad": 5
     }
   ]
 }
