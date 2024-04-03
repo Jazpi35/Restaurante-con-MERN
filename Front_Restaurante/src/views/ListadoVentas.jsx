@@ -36,7 +36,6 @@ const ListadoVentas = () => {
     <div className="card">
       <div className="card-header">
         <h1>Listado de Ventas</h1>
-        <h3>Restaurante</h3>
       </div>
 
       <div className="card-body">
