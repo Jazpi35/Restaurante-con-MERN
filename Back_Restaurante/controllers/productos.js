@@ -59,8 +59,12 @@ const crearProducto = async (req, res) => {
     //console.log(usersJSON);
     // Filtra los productos con estado true
     const productosTrue = productosJSON.productos.filter(producto => producto.estado === true);
+    
     // Convierto el objeto en JSon para enviar al front
-    res.json({productos: productosTrue});
+    res.json({
+      productos: productosTrue,
+      
+    });
   };
   
   // Eliminar producto existente

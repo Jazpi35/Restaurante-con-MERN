@@ -17,6 +17,18 @@
       "producto": "MONDONGO",
       "valor": "15000",
       "estado": true
+    },
+    {
+      "id": "40088fc4-a8fd-4630-ab34-a5c81acec78b",
+      "producto": "POLLO BBQ",
+      "valor": "10000",
+      "estado": true
+    },
+    {
+      "id": "4334ccfa-7c42-414c-8661-ede25a57b8ab",
+      "producto": "POLLO ASADO",
+      "valor": "35000",
+      "estado": true
     }
   ]
 }

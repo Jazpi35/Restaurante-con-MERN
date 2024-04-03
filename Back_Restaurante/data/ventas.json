@@ -1,21 +1,24 @@
 {
   "ventas": [
-
     {
       "id": "228a8730-27f4-45c9-b60d-e385b4b31b23",
       "producto": "CARNE ASADA",
-      "cantidad": 9
+      "cantidad": 7
     },
     {
       "id": "11fd8d15-a454-4a44-a4fe-11f1ddf2f119",
       "producto": "POLLO APANADO",
-      "cantidad": "2"
+      "cantidad": 0
     },
     {
       "id": "0c83c629-8fcc-4ea1-9e08-1fe92dc9d693",
       "producto": "MONDONGO",
-      "cantidad": "2"
+      "cantidad": 0
+    },
+    {
+      "id": "362a0993-a39d-47ff-b283-19963026b8eb",
+      "producto": "POLLO ASADO",
+      "cantidad": 1
     }
-
   ]
 }

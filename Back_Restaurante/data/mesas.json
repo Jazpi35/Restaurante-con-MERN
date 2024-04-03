@@ -3,71 +3,51 @@
       {
         "id": "1",
         "nombre":"MESA 1",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "2",
         "nombre":"MESA 2",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "3",
         "nombre":"MESA 3",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "4",
         "nombre":"MESA 4",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "5",
         "nombre":"MESA 5",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "6",
         "nombre":"MESA 6",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "7",
         "nombre":"MESA 7",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "8",
         "nombre":"MESA 8",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "9",
         "nombre":"MESA 9",
-        "Venta": "",
-        "valor": "",
         "estado": true
       },
       {
         "id": "10",
         "nombre":"MESA 10",
-        "Venta": "",
-        "valor": "",
         "estado": true
       }
     ]

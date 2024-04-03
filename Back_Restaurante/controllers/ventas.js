@@ -5,60 +5,57 @@ const path = require("path");
 // Crear una venta
 const crearVenta = async (req, res) => {
   try {
+    // Desestructura la información que llega del cuerpo de la solicitud
+    const { productos } = req.body;
 
-    //Desestructuro lo que trae 
-    const { id, producto, cantidad } = req.body;
-
-    console.log("Venta a crear: ", id, " ", producto, " ", cantidad)
-
-    // Lee el archivo productos.json para obtener la lista actual de ventas
+    // Lee el archivo ventas.json para obtener la lista actual de ventas
     const ventasList = await fs.readFile(
       path.join(__dirname, "../data/ventas.json"),
       "utf-8"
     );
     const ventasData = JSON.parse(ventasList);
 
-    // Verifica si ya existe una venta del mismo producto
-    const ventaExistente = ventasData.ventas.find((venta) => venta.producto === producto);
+    // Itera sobre cada producto en la lista de productos recibidos
+    productos.forEach(producto => {
+      // Busca si ya existe una venta para el producto actual
+      const ventaExistenteIndex = ventasData.ventas.findIndex(venta => venta.producto === producto.producto);
 
+      if (ventaExistenteIndex !== -1) {
+        // Si existe, actualiza la cantidad vendida
+        ventasData.ventas[ventaExistenteIndex].cantidad += parseInt(producto.cantidad);
+      } else {
+        // Si no existe, crea una nueva entrada para la venta
+        ventasData.ventas.push({
+          id: producto.id,
+          producto: producto.producto,
+          cantidad: parseInt(producto.cantidad)
+        });
+      }
+    });
 
-    if (ventaExistente) {
-      // Si existe, actualiza la cantidad vendida
-      ventaExistente.cantidad = parseInt(ventaExistente.cantidad) + parseInt(cantidad);
-    } else {
-      // Si no existe, crea una nueva entrada para la venta
-
-      // Crea un nuevo objeto para el producto
-      const nuevaVenta = {
-        id,
-        producto,
-        cantidad,
-      };
-      // Agrega el nuevo producto a la lista
-      ventasData.ventas.push(nuevaVenta);
-
-    }
-
-    // Escribe la lista actualizada en el archivo productos.json
+    // Escribe la lista actualizada en el archivo ventas.json
     await fs.writeFile(
       path.join(__dirname, "../data/ventas.json"),
       JSON.stringify(ventasData, null, 2),
       "utf-8"
     );
 
-    res.status(200).json(ventasData);
-
-
-    res.json({
-      message: "✅ Registro creado exitosamente",
+    // Envía una respuesta exitosa al frontend
+    res.status(200).json({
+      message: "✅ Registro(s) creado(s) exitosamente",
+      ventas: ventasData.ventas // Envía la lista actualizada de ventas
     });
+
   } catch (error) {
     console.error("❌ Error al registrar la Venta (backend):", error);
+    // Envía una respuesta de error al frontend
     res.status(500).json({
       message: "❌ Error al registrar la Venta (backend)",
+      error: error.message // Envía el mensaje de error al frontend
     });
   }
 };
+
 
 // Consultar todas las ventas
 const obtenerVentas = async (req, res) => {

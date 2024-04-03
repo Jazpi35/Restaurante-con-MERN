@@ -13,7 +13,7 @@ const obtenerMesas = async (req, res) => {
 
       const mesasJSON = JSON.parse(mesas);
   
-      console.log(mesasJSON);
+      //console.log(mesasJSON);
       // Filtra los productos con estado true
       const mesasTrue = mesasJSON.mesas.filter(mesas => mesas.estado === true);
       // Convierto el objeto en JSon para enviar al front

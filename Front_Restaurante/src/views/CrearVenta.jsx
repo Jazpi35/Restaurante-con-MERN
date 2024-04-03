@@ -9,13 +9,15 @@ const CrearVenta = () => {
   const [mesas, setMesas] = useState([]);
   const [mesaSeleccionado, setMesaSeleccionado] = useState("");
   const [cantidad, setCantidad] = useState("");
+  const [pedido, setPedido] = useState([]);
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
 
-  const crearVenta = async (e) => {
+ /* const crearVenta = async (e) => {
     e.preventDefault();
 
     if (productoSeleccionado !== "" && cantidad !== "") {
       const producto = productoSeleccionado
+      const mesa = mesaSeleccionado
       const id = uuidv4(); // Genera un UUID único
       console.log("id generado: ", id)
       try {
@@ -30,6 +32,7 @@ const CrearVenta = () => {
               id,
               producto,
               cantidad,
+              mesa
             }),
           }
         );
@@ -46,7 +49,7 @@ const CrearVenta = () => {
     } else {
       setMensajeRespuesta("❌ Faltan campos por diligenciar");
     }
-  };
+  };*/
 
   // Llamar al servidor y obtener la lista de productos y mesas
   useEffect(() => {
@@ -69,6 +72,69 @@ const CrearVenta = () => {
     obtenerProductos();
     obtenerMesas();
   }, []);
+
+  const agregarProducto = () => {
+    if (productoSeleccionado !== "" && cantidad !== "") {
+      // Verificar si el producto ya existe en el pedido
+      const productoExistente = pedido.find(item => item.producto === productoSeleccionado);
+      if (productoExistente) {
+        // Actualizar la cantidad del producto existente
+        const cantidadNueva = parseInt(productoExistente.cantidad) + parseInt(cantidad);
+        const pedidoActualizado = pedido.map(item => {
+          if (item.producto === productoSeleccionado) {
+            return { ...item, cantidad: cantidadNueva.toString() };
+          }
+          return item;
+        });
+        setPedido(pedidoActualizado);
+        //console.log(pedidoActualizado);
+      } else {
+        // Agregar un nuevo producto al pedido
+        const nuevoProducto = {
+          id: uuidv4(), // Se genera un nuevo id para el pedido, no para el producto
+          producto: productoSeleccionado,
+          cantidad: cantidad,
+          mesa: mesaSeleccionado
+        };
+        setPedido([...pedido, nuevoProducto]);
+      }
+      setProductoSeleccionado("");
+      setCantidad("");
+      setMesaSeleccionado("");
+      setMensajeRespuesta("");
+    } else {
+      setMensajeRespuesta("❌ Debes seleccionar un producto y una cantidad");
+      //setMensajeRespuesta("");
+    }
+  };
+  
+  const crearVenta = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3500/api/ventas",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productos: pedido,
+          }),
+         }
+      );
+      if (response.ok) {
+        setMensajeRespuesta("✅ Pedido enviado exitosamente");
+        setPedido([]);
+        setMesaSeleccionado("");
+        console.log(pedido);
+      } else {
+        setMensajeRespuesta("❌ Error al enviar el pedido");
+      }
+    } catch (error) {
+      console.error("❌ Error al enviar el pedido:", error);
+      setMensajeRespuesta("❌ Error al enviar el pedido");
+    }
+  };
 
   return (
     <div className="card">
@@ -96,12 +162,12 @@ const CrearVenta = () => {
           value={mesaSeleccionado}
           onChange={(e) => setMesaSeleccionado(e.target.value)}
         >
-        <option value="">Selecciona una mesa</option>
-        {mesas.map((mesa) => (
+          <option value="">Selecciona una mesa</option>
+          {mesas.map((mesa) => (
             <option key={mesa.id} value={mesa.nombre}>
               {mesa.nombre}
             </option>
-        ))}
+          ))}
 
         </select>
 
@@ -114,6 +180,10 @@ const CrearVenta = () => {
           onChange={(e) => setCantidad(e.target.value)}
         />
 
+        <button className="btn btn-primary" onClick={agregarProducto}>
+          Agregar Producto
+        </button>
+
         <div>
           <Link to="/">
             <button className="btn btn-secondary" >Regresar</button>
@@ -121,6 +191,37 @@ const CrearVenta = () => {
           <button className="btn btn-success" onClick={crearVenta}>Crear Venta</button>
         </div>
       </div>
+
+      <div>
+        
+      <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Decripcion</th>
+              <th scope="col">Mesa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pedido
+                .slice() // Copia el array para no modificar el original
+                .sort((a, b) => a.cantidad - b.cantidad) // Ordena ascendente por cantidad
+                .map((item) => (
+                  <tr key={item}>
+                  <td>{item.cantidad}</td>
+                  <td>{item.producto}</td>
+                  <td>{item.mesa} </td>
+                </tr>
+                ))
+            }
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+
 
       <br />
       {mensajeRespuesta && <p>{mensajeRespuesta}</p>}
@@ -130,4 +231,3 @@ const CrearVenta = () => {
 };
 
 export default CrearVenta;
-
