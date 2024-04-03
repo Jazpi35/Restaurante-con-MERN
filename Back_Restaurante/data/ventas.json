@@ -1,10 +1,6 @@
 {
   "ventas": [
-    {
-      "id": "c0b245b2-2037-45f3-b931-63e1ca5ba717",
-      "producto": "POLLO TERILLAQUI",
-      "cantidad": 57
-    },
+
     {
       "id": "228a8730-27f4-45c9-b60d-e385b4b31b23",
       "producto": "CARNE ASADA",
@@ -20,5 +16,6 @@
       "producto": "MONDONGO",
       "cantidad": "2"
     }
+
   ]
 }

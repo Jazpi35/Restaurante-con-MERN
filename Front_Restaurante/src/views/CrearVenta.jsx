@@ -6,7 +6,7 @@ import '../App.css'
 const CrearVenta = () => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
-  const [mesas, setMesas] = useState("");
+  const [mesas, setMesas] = useState([]);
   const [mesaSeleccionado, setMesaSeleccionado] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
@@ -48,7 +48,7 @@ const CrearVenta = () => {
     }
   };
 
-  // Llamar al servidor y obtener la lista de productos
+  // Llamar al servidor y obtener la lista de productos y mesas
   useEffect(() => {
     const obtenerProductos = async () => {
       const response = await fetch(
@@ -57,13 +57,7 @@ const CrearVenta = () => {
       const data = await response.json();
       setProductos(data.productos);
     };
-    console.log("prod. seleccionado:", productoSeleccionado)
 
-    obtenerProductos();
-  }, []);
-
-  // Llamar al servidor y obtener la lista de mesas
-  useEffect(() => {
     const obtenerMesas = async () => {
       const response = await fetch(
         "http://localhost:3500/api/mesas"
@@ -71,8 +65,8 @@ const CrearVenta = () => {
       const data = await response.json();
       setMesas(data.mesas);
     };
-    console.log("prod. seleccionado:", mesaSeleccionado)
 
+    obtenerProductos();
     obtenerMesas();
   }, []);
 
@@ -102,12 +96,12 @@ const CrearVenta = () => {
           value={mesaSeleccionado}
           onChange={(e) => setMesaSeleccionado(e.target.value)}
         >
-          <option value="">Selecciona una mesa</option>
-          {mesas.map((mesa) => (
+        <option value="">Selecciona una mesa</option>
+        {mesas.map((mesa) => (
             <option key={mesa.id} value={mesa.nombre}>
               {mesa.nombre}
             </option>
-          ))}
+        ))}
 
         </select>
 
@@ -136,3 +130,4 @@ const CrearVenta = () => {
 };
 
 export default CrearVenta;
+

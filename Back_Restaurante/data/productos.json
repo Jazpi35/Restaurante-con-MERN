@@ -1,12 +1,6 @@
 {
   "productos": [
     {
-      "id": "d6b26c1d-2d29-46dd-a5ce-990225a2eae9",
-      "producto": "POLLO TERILLAQUI",
-      "valor": "50000",
-      "estado": true
-    },
-    {
       "id": "98db4cfc-c8f4-4331-952d-95c4abdcb4e5",
       "producto": "CARNE ASADA",
       "valor": "15000",
@@ -15,7 +9,7 @@
     {
       "id": "4ce9dcba-63b8-449f-a20b-81348fe44a99",
       "producto": "POLLO APANADO",
-      "valor": "50000",
+      "valor": "80000",
       "estado": true
     },
     {
