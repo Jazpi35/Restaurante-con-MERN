@@ -30,6 +30,21 @@
       "nombre": "mesero 2",
       "password": "$2a$10$vmuE3OU.b.HChsEPsDtBheH2X35fIatXqkGyheqiYHf8xIBNpgV66",
       "rol": "USER_ROLE",
+      "estado": false
+    },
+    {
+      "id": "f0d650d2-0496-4e84-9aa5-f9510d58e25c",
+      "user": "cocina@prueba.com",
+      "nombre": "Cocinero 1 ",
+      "password": "$2a$10$aSzhtspNonw4w6LeBZddAODdwuen2FDI037EAkSg8rE8zEMBcIela",
+      "rol": "COC_ROLE",
+      "estado": true
+    },
+    {
+      "user": "admin2@google.com",
+      "nombre": "Jonathan",
+      "password": "$2a$10$Bk1.enL9gZ/6dJs5pxbqXeNQkAweTTDI5gDQm2Au3INQnvQSKh9fC",
+      "rol": "ADMIN_ROLE",
       "estado": true
     }
   ]

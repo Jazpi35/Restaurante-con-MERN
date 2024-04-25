@@ -18,7 +18,7 @@ const Admin = () => {
   // función Crear usuario
   const crearUsuario = async (e) => {
     e.preventDefault();
-    const id = uuidv4();
+
     if (user !== "" && (rol !== "" || rol > 0)) {
 
       try {
@@ -30,7 +30,6 @@ const Admin = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id, // Utilizamos el ID autoincremental
               user,
               nombre,
               password,
@@ -140,6 +139,7 @@ const Admin = () => {
           <option value="0">Selecciona un Rol</option>
           <option value="ADMIN_ROLE">Administrador</option>
           <option value="USER_ROLE">Mesero</option>
+          <option value="COC_ROLE">Cocina</option>
         </select>
 
         <div>

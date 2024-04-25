@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 
 const { validarCampos } = require('../middlewares/validar-campos');
 
-const { esRoleValido, emailExiste, productoExiste } = require('../helpers/db-validarots');
+const { productoExiste } = require('../helpers/db-validarots');
 
 const { crearProducto, eliminarProducto, obtenerProductos } = require('../controllers/productos');
 

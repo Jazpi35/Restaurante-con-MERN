@@ -2,9 +2,6 @@ const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 const fs = require("fs/promises");
 const path = require("path");
-//Importo el modelo de usuario 
-const Usuario = require ('../models/usuario');
-
 
 const usuariosGet = async (req, res) => {
     const users = await fs.readFile(path.join(__dirname, "../data/users.json"));
@@ -14,15 +11,32 @@ const usuariosGet = async (req, res) => {
     // Filtra los usuarios con estado true
     const usuariosTrue = usersJSON.usuarios.filter(user => user.estado === true);
     // Convierto el objeto en JSon para enviar al front
-    res.json({ usuarios: usuariosTrue });
+    res.json({usuarios: usuariosTrue});
 }
 
 const usuariosPost = async (req, res = response) => {
 
     try {
-        const { correo , nombre, password, rol, estado } = req.body;
-        const usuario = new Usuario ({correo, nombre, password, rol, estado });
-        // console.log(user, nombre, password, rol);
+        const { user, nombre, password, rol, estado } = req.body;
+       // console.log(id,user, nombre, password, rol);
+
+
+        // Lee el archivo users.json para obtener la lista actual de usuarios
+        const usersList = await fs.readFile(
+            path.join(__dirname, "../data/users.json"),
+            "utf-8"
+        );
+        const usersData = JSON.parse(usersList);
+
+        // Crea un nuevo objeto para el usuario
+        const nuevoUsuario = {
+            id,
+            user,
+            nombre,
+            password,
+            rol,
+            estado,
+        };
 
         //Encriptar contraseña
         //Esta funcion permite encryptar la contraseña
@@ -32,14 +46,21 @@ const usuariosPost = async (req, res = response) => {
         //Aqui la encrypto
         //hashSync sirve para encryptar en una sola via 
         // y me pide la contraseña y el numero de vueltas
-        usuario.password = bcryptjs.hashSync(password, salt);
+        nuevoUsuario.password = bcryptjs.hashSync(password, salt);
 
-        //Guardo el usuario
-        await usuario.save();
+        // Agrega el nuevo usuario a la lista
+        usersData.usuarios.push(nuevoUsuario);
+
+        // Escribe la lista actualizada en el archivo users.json
+        await fs.writeFile(
+            path.join(__dirname, "../data/users.json"),
+            JSON.stringify(usersData, null, 2),
+            "utf-8"
+        );
 
         res.status(201).json({
             msg: 'Usuario Creado Correctamente',
-            usuario
+            nuevoUsuario
         });
     } catch (error) {
         console.error("❌ Error al registrar el usuario:", error);
@@ -65,15 +86,15 @@ const usuariosDelete = async (req, res = response) => {
         );
 
         const usersData = JSON.parse(usuariosList);
-
+            
         //console.log("este es userdata:",usersData);
 
 
         // Busca el usuario por id y su index 
         const usersIndex = usersData.usuarios.findIndex((userp) => userp.id === id);
 
-
-        console.log("este es users index: ", usersIndex);
+            
+        console.log("este es users index: ",usersIndex);
 
         // el busca desde el cero en adelante si es menor no existe
         if (usersIndex === -1) {

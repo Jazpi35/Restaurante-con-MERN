@@ -35,6 +35,9 @@ const App = () => {
         } else if (data.rol === "USER_ROLE") {
           // El usuario tiene el rol de mesero
           goTo("/CrearVenta");
+        } else if (data.rol === "COC_ROLE") {
+          // El usuario tiene el rol de mesero
+          goTo("/ListadoCocina");
         } else {
           setMensajeRespuesta("❌ Usuario incorrecto");
         }
@@ -81,68 +84,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-// import "./App.css";
-// import { useState } from "react";
-// //import { useNavigate } from "react-router-dom";
-
-// const App = () => {
-//   const [correo, setCorreo] = useState(null);
-//   //const goTo = useNavigate();
-
-//   function validateUser() {
-//     if (correo !== null) {
-//       try {
-//         const response = fetch(
-//           `http://localhost:3500/v1/restaurante/validarLogin/${correo}`
-//         );
-//         const data = response.json();
-//         console.log("data json:" + data);
-//         // if (data === "1"){
-//         //   goTo("/Admin")
-//         // } if (data === "2") {
-//         //   goTo("/CrearVenta")
-//         // } else {
-//         //   console.log("Usuario no válido")
-//         // }
-//       } catch (error) {
-//         console.error("Error al validar usuario Login:", error);
-//       }
-//     } else {
-//       console.log("Debe diligenciar el campo usuario");
-//     }
-//     // if (correo === "juego" && password === "juego123") {
-//     //   goTo("/Juego");
-//     // } else if (correo === "cocina" && password === "cocina123") {
-//     //   goTo("/Cocina");
-//     // } else {
-//     //   alert("¡Usuario Incorrecto! Inténtalo de nuevo");
-//     // }
-//   }
-
-//   return (
-//     // <div>
-//     //   <input id="input" type="text" placeholder="Usuario" onChange={(e) => setCorreo(e.target.value)}/>
-//     //   <button id="iniciar" onClick={validateUser}>Iniciar</button>
-//     // </div>
-//     <div className="App">
-//       <h1>Login</h1>
-
-//       <form onSubmit={validateUser}>
-//         <input
-//           id="input"
-//           type="text"
-//           placeholder="Usuario"
-//           onChange={(e) => setCorreo(e.target.value)}
-//         />
-//         <br></br>
-//         <br></br>
-//         <button id="iniciar" type="submit">Iniciar</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default App;

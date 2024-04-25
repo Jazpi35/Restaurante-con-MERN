@@ -1,5 +1,7 @@
 const express = require('express')
 const cors = require('cors');
+//Extraemos la conexion de la BD 
+const { dbConnection } = require('./config');
 
 class Server {
 
@@ -8,12 +10,17 @@ class Server {
         this.port = process.env.PORT;//configuracion del puerto
 
         this.paths = {
-            auth:  '/api/auth',//defino URL autenticacion - login
+            auth: '/api/auth',//defino URL autenticacion - login
             mesas: '/api/mesas',
+            pedidos: '/api/pedidos',
             productos: '/api/productos',
             usuarios: '/api/usuarios',
             ventas: '/api/ventas'
         }
+
+
+        //Conectar a base de datos
+        this.conectarDB();
 
         //Middlewares
         //Funcion que se ejecuta antes de llamar un controlador o seguir
@@ -21,6 +28,10 @@ class Server {
         this.middlewares();
         //Rutas de aplicacion
         this.routes();
+    }
+
+    async conectarDB() {
+        await dbConnection();
     }
 
     middlewares() {
@@ -36,20 +47,20 @@ class Server {
     }
 
     routes() {
-        this.app.use( this.paths.auth, require('../routes/auth'));
-        this.app.use( this.paths.mesas, require('../routes/mesas'));
-        this.app.use( this.paths.usuarios, require('../routes/usuarios'));
-        this.app.use( this.paths.productos, require('../routes/productos'));
-        this.app.use( this.paths.ventas, require('../routes/ventas'));
+        this.app.use(this.paths.auth, require('../routes/auth'));
+        this.app.use(this.paths.mesas, require('../routes/mesas'));
+        this.app.use(this.paths.usuarios, require('../routes/usuarios'));
+        this.app.use(this.paths.pedidos, require('../routes/pedidos'));
+        this.app.use(this.paths.productos, require('../routes/productos'));
+        this.app.use(this.paths.ventas, require('../routes/ventas'));
     }
 
     listen() {
-        this.app.listen(3500, () => {
-            console.log('Servidor corriendo en puerto 3500');
+        this.app.listen(this.port, () => {
+            console.log('Servidor corriendo en puerto', this.port);
         });
     }
 
 }
-
 
 module.exports = Server;

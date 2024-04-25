@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const ListadoUsuarios = () => {
 
@@ -44,11 +45,20 @@ useEffect(() => {
 
       if (response.ok) {
         setUsuarios(usuarios.filter(usuario => usuario.id !== id));
-        setMensajeRespuesta("✅ Usuario eliminado exitosamente");
-        console.log("✅ Usuario eliminado exitosamente");
+        Swal.fire({
+          title: "Usuario Eliminado Exitosamente!",
+          text: "Este usuario fue eliminado!",
+          icon: "success"
+        });
+        //console.log("✅ Usuario eliminado exitosamente");
       } else if (response.status === 404) {
-        setMensajeRespuesta("❌ Usuario no encontrado. Ingrese un usuario válido");
-        console.log("❌ Usuario no encontrado");
+        //setMensajeRespuesta("❌ Usuario no encontrado. Ingrese un usuario válido");
+        //console.log("❌ Usuario no encontrado");
+        Swal.fire({
+          title: "Usuario no encontrado!",
+          text: "Por favor seleccione un usuario valido!",
+          icon: "error"
+        });
       } else {
         setMensajeRespuesta("❌ Error al eliminar el Usuario 1");
         console.log("❌ Error al eliminar el Usuario 1");
@@ -70,7 +80,6 @@ useEffect(() => {
     <div className="card">
       <div className="card-header">
         <h1>Listado de Usuarios</h1>
-        <h3>Restaurante</h3>
       </div>
 
       <div className="card-body">

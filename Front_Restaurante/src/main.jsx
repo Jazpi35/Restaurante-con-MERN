@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Admin from "./views/Admin.jsx";
 import CrearVenta from "./views/CrearVenta.jsx"
+import ListadoCocina from "./views/ListadoCocina.jsx";
 import ListadoUsuarios from "./views/ListadoUsuarios.jsx";
 import ListadoProductos from "./views/ListadoProductos.jsx";
 import ListadoVentas from "./views/ListadoVentas.jsx";
@@ -34,6 +35,10 @@ const routes = [
     path: "/ListadoVentas",
     element: <ListadoVentas />,
   },
+/* {
+    path: "/ListadoCocina",
+    element: <ListadoCocina />,
+  },*/
 ];
 
 const router = createBrowserRouter(routes)

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"; // Importa la librería UUID
 import '../App.css'
+import Swal from 'sweetalert2';
 
 const CrearVenta = () => {
   const [productos, setProductos] = useState([]);
@@ -103,9 +104,12 @@ const CrearVenta = () => {
       setMesaSeleccionado("");
       setMensajeRespuesta("");
     } else {
-      setMensajeRespuesta("❌ Debes seleccionar un producto y una cantidad");
-      //setMensajeRespuesta("");
-    }
+      Swal.fire({
+        title: "Diligencia los campos!",
+        text: "Por favor completa los campos para continuar!",
+        icon: "error"
+      });
+     }
   };
   
   const crearVenta = async () => {
@@ -123,7 +127,11 @@ const CrearVenta = () => {
          }
       );
       if (response.ok) {
-        setMensajeRespuesta("✅ Pedido enviado exitosamente");
+        Swal.fire({
+          title: "Pedido Enviado Exitosamente!",
+          text: "Por favor espere en su mesa!",
+          icon: "success"
+        });
         setPedido([]);
         setMesaSeleccionado("");
         console.log(pedido);
@@ -139,7 +147,6 @@ const CrearVenta = () => {
   return (
     <div className="card">
       <h1>Módulo Mesero</h1>
-      <h2>Restaurante</h2>
       <div className="card">
         <h3>Crear Venta</h3>
 

@@ -29,6 +29,12 @@
       "producto": "POLLO ASADO",
       "valor": "35000",
       "estado": true
+    },
+    {
+      "id": "3bc0b1a3-ef73-4725-8754-e623e81647b8",
+      "producto": "ALITAS",
+      "valor": "10000",
+      "estado": true
     }
   ]
 }

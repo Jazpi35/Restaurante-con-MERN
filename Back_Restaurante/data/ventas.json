@@ -3,21 +3,26 @@
     {
       "id": "228a8730-27f4-45c9-b60d-e385b4b31b23",
       "producto": "CARNE ASADA",
-      "cantidad": 7
+      "cantidad": 17
     },
     {
       "id": "11fd8d15-a454-4a44-a4fe-11f1ddf2f119",
       "producto": "POLLO APANADO",
-      "cantidad": 0
+      "cantidad": 11
     },
     {
       "id": "0c83c629-8fcc-4ea1-9e08-1fe92dc9d693",
       "producto": "MONDONGO",
-      "cantidad": 0
+      "cantidad": 2
     },
     {
       "id": "362a0993-a39d-47ff-b283-19963026b8eb",
       "producto": "POLLO ASADO",
+      "cantidad": 1
+    },
+    {
+      "id": "072a38cc-c8a4-4462-ab07-0c587f7f9eb0",
+      "producto": "ALITAS",
       "cantidad": 1
     }
   ]

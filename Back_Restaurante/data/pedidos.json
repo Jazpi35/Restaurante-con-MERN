@@ -1,0 +1,10 @@
+{
+    "pedidos": [
+      {
+        "id": "1",
+        "mesa":"MESA 2",
+        "productos":"CARNE ASADA",
+        "estado": true
+      }
+    ]
+  }

@@ -12,7 +12,7 @@ const crearProducto = async (req, res) => {
 
   try {
 
-      // Lee el archivo productos.json para obtener la lista actual de productos
+      // Leo el archivo productos.json para obtener la lista actual de productos
       const productosList = await fs.readFile(
         path.join(__dirname, "../data/productos.json"),
         "utf-8"
@@ -20,7 +20,7 @@ const crearProducto = async (req, res) => {
       
       const productosData = JSON.parse(productosList);
   
-      // Crea un nuevo objeto para el producto
+      // Creo un nuevo objeto para el producto
       const nuevoProducto = {
         id,
         producto,
