@@ -5,7 +5,7 @@ import "../App.css";
 import { v4 as uuidv4 } from "uuid"; // Importa la librería UUID
 
 const Admin = () => {
-  const [user, setUser] = useState("");
+  const [correo, setCorreo] = useState("");
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [rol, setRol] = useState("");
@@ -19,7 +19,7 @@ const Admin = () => {
   const crearUsuario = async (e) => {
     e.preventDefault();
 
-    if (user !== "" && (rol !== "" || rol > 0)) {
+    if (correo !== "" && (rol !== "" || rol > 0)) {
 
       try {
         const response = await fetch(
@@ -30,7 +30,7 @@ const Admin = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              user,
+              correo,
               nombre,
               password,
               rol,
@@ -43,7 +43,7 @@ const Admin = () => {
         if (response.ok) {
           setMensajeRespuesta("✅ Registro creado exitosamente");
           // Limpia los campos del formulario
-          setUser("");
+          setCorreo("");
           setNombre("");
           setPassword("");
           setRol("");
@@ -106,12 +106,12 @@ const Admin = () => {
         <h3>Gestión de Usuarios</h3>
         <input
           className="form-control"
-          value={user}
+          value={correo}
           type="text"
           name=""
           id=""
           placeholder="ingresa el Correo"
-          onChange={(e) => setUser(e.target.value)}
+          onChange={(e) => setCorreo(e.target.value)}
         />
         <input
           className="form-control"
@@ -138,7 +138,7 @@ const Admin = () => {
         >
           <option value="0">Selecciona un Rol</option>
           <option value="ADMIN_ROLE">Administrador</option>
-          <option value="USER_ROLE">Mesero</option>
+          <option value="Mesero">Mesero</option>
           <option value="COC_ROLE">Cocina</option>
         </select>
 

@@ -29,12 +29,12 @@ useEffect(() => {
   }, []);
 
 
-  const handleEliminar = async (id) => {
+  const handleEliminar = async (_id) => {
  
     try {
-      console.log("enviando delete Usuario = ", id);
+      console.log("enviando delete Usuario = ", _id);
       const response = await fetch(
-        `http://localhost:3500/api/usuarios/${id}`,
+        `http://localhost:3500/api/usuarios/${_id}`,
         {
           method: "DELETE",
           headers: {
@@ -44,7 +44,7 @@ useEffect(() => {
       );
 
       if (response.ok) {
-        setUsuarios(usuarios.filter(usuario => usuario.id !== id));
+        setUsuarios(usuarios.filter(usuario => usuario._id !== _id));
         Swal.fire({
           title: "Usuario Eliminado Exitosamente!",
           text: "Este usuario fue eliminado!",
@@ -86,22 +86,20 @@ useEffect(() => {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
-            <th scope="col">id_prueba</th>
-              <th scope="col">Usuario</th>
+              <th scope="col">Correo</th>
               <th scope="col">Nombre</th>
               <th scope="col">Rol</th>
               <th scope="col">Accion</th>
             </tr>
           </thead>
           <tbody>
-            {usuarios.map(({ id, user, nombre, rol }) => (
-              <tr key={user}>
-                <td>{id}</td>
-                <td>{user}</td>
+            {usuarios.map(({ _id, correo, nombre, rol }) => (
+              <tr key={_id}>
+                <td>{correo}</td>
                 <td>{nombre}</td>
                 <td>{rol == "ADMIN_ROLE" ? "Administrador" : "Mesero"}</td>
                 <td>
-                   <button className="btn btn-danger" onClick={() => handleEliminar(id)}>
+                   <button className="btn btn-danger" onClick={() => handleEliminar(_id)}>
                     Eliminar
                   </button>
                 </td>

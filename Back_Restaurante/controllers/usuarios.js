@@ -3,25 +3,34 @@ const bcryptjs = require('bcryptjs');
 const fs = require("fs/promises");
 const path = require("path");
 //Importo el modelo de usuario 
-const Usuario = require ('../models/usuario');
+const Usuario = require('../models/usuario');
 
 
 const usuariosGet = async (req, res) => {
-    const users = await fs.readFile(path.join(__dirname, "../data/users.json"));
-    const usersJSON = JSON.parse(users);
+    const { limite = 5, desde = 0 } = req.query;
+    const query = { estado: true };
+    // Enviamos desde la url desde que usuario hasta donde mostrar
+    // Se utiliza la promesa por que ejecuta los dos await al mismo tiempo
+    // y no dispara hasta que no acabe
 
-    console.log(usersJSON);
-    // Filtra los usuarios con estado true
-    const usuariosTrue = usersJSON.usuarios.filter(user => user.estado === true);
-    // Convierto el objeto en JSon para enviar al front
-    res.json({ usuarios: usuariosTrue });
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(query),
+        Usuario.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
+
+    res.json({
+        total,
+        usuarios
+    });
 }
 
 const usuariosPost = async (req, res = response) => {
 
     try {
-        const { correo , nombre, password, rol, estado } = req.body;
-        const usuario = new Usuario ({correo, nombre, password, rol, estado });
+        const { correo, nombre, password, rol, estado } = req.body;
+        const usuario = new Usuario({ correo, nombre, password, rol, estado });
         // console.log(user, nombre, password, rol);
 
         //Encriptar contraseña
@@ -58,48 +67,20 @@ const usuariosDelete = async (req, res = response) => {
 
     try {
 
-        // Lee el archivo users.json para obtener la lista actual de usuarios
-        const usuariosList = await fs.readFile(
-            path.join(__dirname, "../data/users.json"),
-            "utf-8"
-        );
+        const { id } = req.params;
 
-        const usersData = JSON.parse(usuariosList);
+        //Fisicamente lo borramos <---> No recomendado
+        //const usuario = await Usuario.findByIdAndDelete( id );
 
-        //console.log("este es userdata:",usersData);
+        // Suguerido para mantener la integridad de la informacion
+        const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
 
+        // de la req miro cual es mi usuario autenticado
+        //const usuarioAutenticado = req.usuario;
 
-        // Busca el usuario por id y su index 
-        const usersIndex = usersData.usuarios.findIndex((userp) => userp.id === id);
-
-
-        console.log("este es users index: ", usersIndex);
-
-        // el busca desde el cero en adelante si es menor no existe
-        if (usersIndex === -1) {
-            return res.status(404).json({
-                message: "❌ Usuario no encontrado (back)",
-            });
-        }
-
-        // Cambia el estado del usuario de true a false
-        usersData.usuarios[usersIndex].estado = false;
-
-
-        // Convierte los datos de nuevo a formato JSON
-        const updatedData = JSON.stringify(usersData, null, 2);
-
-        //console.log("este es actulizar data: ",updatedData);
-
-        // Escribe los datos actualizados de vuelta al archivo users.json
-        await fs.writeFile(
-            path.join(__dirname, "../data/users.json"),
-            updatedData,
-            "utf-8"
-        );
-
-        return res.status(200).json({
-            message: "✅ Usuario eliminado correctamente",
+        res.status(201).json({
+            msg: 'Usuario Eliminado Correctamente',
+            usuario
         });
     } catch (error) {
         console.error("❌ Error al eliminar el cliente:", error);

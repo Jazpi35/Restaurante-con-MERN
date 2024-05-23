@@ -32,7 +32,7 @@ const App = () => {
         if (data.rol === "ADMIN_ROLE") {
           // El usuario tiene el rol de administrador
           goTo("/Admin");
-        } else if (data.rol === "USER_ROLE") {
+        } else if (data.rol === "Mesero") {
           // El usuario tiene el rol de mesero
           goTo("/CrearVenta");
         } else if (data.rol === "COC_ROLE") {

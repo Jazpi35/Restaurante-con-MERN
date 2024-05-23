@@ -23,7 +23,7 @@ router.post('/', [
     //check('correo', 'El correo electrónico es obligatorio').notEmpty().isEmail().custom(emailExiste),
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'El password debe de ser mas de 8 letras').isLength({ min: 8 }),
-    check('rol', 'No es un rol permitido').isIn(['ADMIN_ROLE', 'USER_ROLE','COC_ROLE']),
+    check('rol', 'No es un rol permitido').isIn(['ADMIN_ROLE','COC_ROLE','Mesero']),
     // este revisa los errores de cada uno de los checks
     // si pasa ejecuta el controlador si no pailas
     validarCampos
