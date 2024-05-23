@@ -17,8 +17,8 @@ router.get('/', obtenerProductos);
 //Por que le estoy esoecificando que el campo del body correo necesito validar
 
 router.post('/', [
-    check('producto').custom(productoExiste),
-    check('valor', 'El valor es obligatorio').not().isEmpty(),
+    check('productoN'),
+    check('precio', 'El valor es obligatorio').not().isEmpty(),
     validarCampos
 ], crearProducto);
 

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 const ListadoProductos = () => {
   const [productos, setProductos] = useState([]);
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
+
+  
   useEffect(() => {
     const obtenerListProduct = async () => {
       try {
@@ -26,12 +28,12 @@ const ListadoProductos = () => {
   }, []);
 
 
-  const handleEliminar = async (id) => {
+  const handleEliminar = async (_id) => {
 
     try {
-      console.log("enviando delete Producto = ", id);
+      console.log("enviando delete Producto = ", _id);
       const response = await fetch(
-        `http://localhost:3500/api/productos/${id}`,
+        `http://localhost:3500/api/productos/${_id}`,
         {
           method: "DELETE",
           headers: {
@@ -41,7 +43,7 @@ const ListadoProductos = () => {
       );
 
       if (response.ok) {
-        setProductos(productos.filter(producto => producto.id !== id));
+        setProductos(productos.filter(producto => producto._id !== _id));
         setMensajeRespuesta("✅ Producto eliminado exitosamente");
         console.log("✅ Producto eliminado exitosamente");
       } else if (response.status === 404) {
@@ -80,12 +82,12 @@ const ListadoProductos = () => {
             </tr>
           </thead>
           <tbody>
-            {productos.map(({ id, producto, valor }) => (
-              <tr key={producto}>
-                <td>{producto}</td>
-                <td>$ {valor}</td>
+            {productos.map(({ _id, productoN, precio }) => (
+              <tr key={_id}>
+                <td>{productoN}</td>
+                <td>$ {precio}</td>
                 <td>
-                  <button className="btn btn-danger" onClick={() => handleEliminar(id)}>
+                  <button className="btn btn-danger" onClick={() => handleEliminar(_id)}>
                     Eliminar
                   </button>
                 </td>

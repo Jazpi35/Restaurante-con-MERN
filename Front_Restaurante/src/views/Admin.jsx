@@ -9,8 +9,8 @@ const Admin = () => {
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [rol, setRol] = useState("");
-  const [producto, setProducto] = useState("");
-  const [valor, setValor] = useState("");
+  const [productoN, setProductoN] = useState("");
+  const [precio, setPrecio] = useState("");
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
 
 
@@ -59,12 +59,13 @@ const Admin = () => {
     }
   };
 
-  // función Crear producto
+  // función Crear productoN
   const crearProducto = async (e) => {
     e.preventDefault();
-    const id = uuidv4();
-    if (producto !== "" && valor !== "") {
+    //console.log(productoN,precio);
+    if (productoN !== "" && precio !== "") {
       try {
+        console.log(productoN,precio);
         const response = await fetch(
           "http://localhost:3500/api/productos",
           {
@@ -73,9 +74,8 @@ const Admin = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id,
-              producto,
-              valor,
+              productoN,
+              precio,
               estado: true
             }),
           }
@@ -84,8 +84,8 @@ const Admin = () => {
         if (response.ok) {
           setMensajeRespuesta("✅ Registro creado exitosamente");
           // Limpia los campos del formulario
-          setProducto("");
-          setValor("");
+          setProductoN("");
+          setPrecio("");
         } else {
           setMensajeRespuesta("❌ Error al registrar el Producto");
         }
@@ -158,21 +158,21 @@ const Admin = () => {
         <h3>Gestión de Productos</h3>
         <input
           className="form-control"
-          value={producto}
+          value={productoN}
           type="text"
           name=""
           id=""
           placeholder="ingresa el Producto..."
-          onChange={(e) => setProducto(e.target.value)}
+          onChange={(e) => setProductoN(e.target.value)}
         />
         <input
           className="form-control"
-          value={valor}
+          value={precio}
           type="number"
           name=""
           id=""
-          placeholder="ingresa el valor..."
-          onChange={(e) => setValor(e.target.value)}
+          placeholder="ingresa el precio..."
+          onChange={(e) => setPrecio(e.target.value)}
         />
         <div>
           <button className="btn btn-success" onClick={crearProducto}>

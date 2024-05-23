@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const ProductoSchema = Schema({
 
-    nombre: {
+    productoN: {
         type: String,
         //Valido para que la informacion no se erronea
         require: [true, 'El nombre es obligatorio']
