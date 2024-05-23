@@ -32,6 +32,7 @@ const ListadoProductos = () => {
 
     try {
       console.log("enviando delete Producto = ", _id);
+      
       const response = await fetch(
         `http://localhost:3500/api/productos/${_id}`,
         {

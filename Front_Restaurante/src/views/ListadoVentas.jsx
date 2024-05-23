@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const ListadoVentas = () => {
@@ -12,21 +12,24 @@ const ListadoVentas = () => {
           "http://localhost:3500/api/ventas"
         );
         const data = await response.json();
-        console.log(data.ventas);
         setVentas(data.ventas);
-
-        // Calcular el valor total de todas las ventas
-        const valorTotal = data.ventas.reduce((total, venta) => {
-          return total + venta.vTotalVenta;
-        }, 0);
-
-        setValorTotalTodasLasVentas(valorTotal);
+        calcularValorTotalVentas(data.ventas);
       } catch (error) {
         console.error("Error al obtener las ventas:", error);
       }
     };
     obtenerListVentas();
   }, []);
+
+  const calcularValorTotalVentas = (ventas) => {
+    let valorTotalVentas = 0;
+    ventas.forEach(venta => {
+      venta.productos.forEach(producto => {
+        valorTotalVentas += producto.precio * producto.cantidad;
+      });
+    });
+    setValorTotalTodasLasVentas(valorTotalVentas);
+  };
 
   if (ventas.length === 0) {
     return <p>Cargando...</p>;
@@ -42,23 +45,25 @@ const ListadoVentas = () => {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
+              <th scope="col">ID Venta</th>
               <th scope="col">Producto</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Valor Unidad</th>
-              <th scope="col">Valor Total</th>
+              <th scope="col">Valor Total Producto</th>
             </tr>
           </thead>
           <tbody>
-            {ventas.map(
-              ({ id, producto, cantidad, valorUnitario, vTotalVenta }) => (
-                <tr key={id}>
-                  <td>{producto}</td>
-                  <td>{cantidad}</td>
-                  <td>$ {valorUnitario}</td>
-                  <td>$ {vTotalVenta}</td>
+            {ventas.map(venta => (
+              venta.productos.map((producto, index) => (
+                <tr key={index}>
+                  {index === 0 && <td rowSpan={venta.productos.length}>{venta._id}</td>}
+                  <td>{producto.nombre}</td>
+                  <td>{producto.cantidad}</td>
+                  <td>$ {producto.precio}</td>
+                  <td>$ {producto.precio * producto.cantidad}</td>
                 </tr>
-              )
-            )}
+              ))
+            ))}
           </tbody>
         </table>
 

@@ -1,112 +1,105 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import '../App.css';
 
 const ListadoCocina = () => {
-
-  const [pedidos, setPedidos] = useState([]);
-  const [mensajeRespuesta, setMensajeRespuesta] = useState("");
-
-useEffect(() => {
-    const obtenerListPedidos = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3500/api/pedidos/`
-        );
-        
+    const [ventas, setVentas] = useState([]);
+  
+    useEffect(() => {
+      const obtenerVentas = async () => {
+        const response = await fetch("http://localhost:3500/api/ventas");
         const data = await response.json();
-        if (data && data.pedidos) {
-          console.log(data.pedidos);
-          setPedidos(data.pedidos);
-        } else {
-          console.error("La respuesta del servidor no tiene la estructura esperada.");
-        }
-      } catch (error) {
-        console.error("Error al obtener los Pedidos:", error);
-      }
-    };
-    obtenerListPedidos();
-  }, []);
-
-
-  const handleEntregar = async (id) => {
- 
-    try {
-      console.log("enviando delete Usuario = ", id);
-      const response = await fetch(
-        `http://localhost:3500/api/usuarios/${id}`,
-        {
-          method: "DELETE",
+        setVentas(data.ventas);
+      };
+  
+      obtenerVentas();
+    }, []);
+  
+    const actualizarEstadoVenta = async (id, nuevoEstado) => {
+      try {
+        const response = await fetch(`http://localhost:3500/api/ventas/${id}`, {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            estado: nuevoEstado
+          }),
+        });
+  
+        if (response.ok) {
+          Swal.fire({
+            title: "Estado Actualizado!",
+            text: "El estado de la venta ha sido actualizado.",
+            icon: "success"
+          });
+          setVentas(ventas.map(venta => venta._id === id ? { ...venta, estado: nuevoEstado } : venta));
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "No se pudo actualizar el estado de la venta.",
+            icon: "error"
+          });
         }
-      );
-
-      if (response.ok) {
-        setUsuarios(usuarios.filter(usuario => usuario.id !== id));
-        setMensajeRespuesta("✅ Pedido Terminado exitosamente");
-        console.log("✅ Pedido Terminado exitosamente");
-      } else if (response.status === 404) {
-        setMensajeRespuesta("❌ Pedido no encontrado. Ingrese un pedido válido");
-        console.log("❌ Pedido no encontrado");
-      } else {
-        setMensajeRespuesta("❌  Error al Finalizar la entrega 1");
-        console.log("❌ Error al Finalizar la entrega 1");
+      } catch (error) {
+        console.error("❌ Error al actualizar el estado de la venta:", error);
       }
-    } catch (error) {
-      setMensajeRespuesta("❌ Error al Finalizar la entrega ");
-      console.log("❌ Error al Finalizar la entrega 2");
-    }
-
-  };
-
-
-  if (pedidos.length === 0) {
-    return <p>Cargando...</p>;
-  }
-
-  return (
-
-    <div className="card">
-      <div className="card-header">
-        <h1>Listado de Pedidos</h1>
-    </div>
-
-      <div className="card-body">
-        <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-            <th scope="col">id_prueba</th>
-              <th scope="col">Mesa</th>
-              <th scope="col">Producto</th>
-              <th scope="col">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pedidos.map(({ id, mesa, producto, estado }) => (
-              <tr key={id}>
-                <td>{id}</td>
-                <td>{mesa}</td>
-                <td>{producto}</td>
-                <td>{estado}</td>
-                <td>
-                   <button className="btn btn-danger" onClick={() => handleEntregar(id)}>
-                    Eliminar
-                  </button>
-                </td>
+    };
+  
+    return (
+      <div className="card">
+        <h1>Módulo Cocina</h1>
+        <div className="card">
+          <h3>Pedidos Pendientes</h3>
+  
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Mesa</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <br />
-        {mensajeRespuesta && <p>{mensajeRespuesta}</p>}
-        <br />
-        <Link to="/">
-          <button className="btn btn-secondary">Regresar</button>
-        </Link>
+            </thead>
+            <tbody>
+              {ventas.map((venta) => (
+                <tr key={venta._id}>
+                  <td>{venta.mesa || "Sin mesa"}</td>
+                  <td>
+                    {venta.productos.map((producto) => (
+                      <div key={producto.productoId}>
+                        {producto.cantidad} x {producto.nombre}
+                      </div>
+                    ))}
+                  </td>
+                  <td>{venta.total}</td>
+                  <td>{venta.estado}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => actualizarEstadoVenta(venta._id, "terminada")}
+                    >
+                      Terminado
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <Link to="/">
+            <button className="btn btn-secondary">Regresar al Login</button>
+          </Link>
+          <Link to="/CrearVenta">
+            <button className="btn btn-primary">Crear Venta</button>
+          </Link>
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default ListadoCocina;

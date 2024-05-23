@@ -1,57 +1,36 @@
 const fs = require("fs/promises");
 const path = require("path");
-
+const Venta = require('../models/venta');
 
 // Crear una venta
 const crearVenta = async (req, res) => {
   try {
-    // Desestructura la información que llega del cuerpo de la solicitud
-    const { productos } = req.body;
+    const { mesa, productos } = req.body;
 
-    // Lee el archivo ventas.json para obtener la lista actual de ventas
-    const ventasList = await fs.readFile(
-      path.join(__dirname, "../data/ventas.json"),
-      "utf-8"
-    );
-    const ventasData = JSON.parse(ventasList);
+    // Calcula el total de la venta
+    const total = productos.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
 
-    // Itera sobre cada producto en la lista de productos recibidos
-    productos.forEach(producto => {
-      // Busca si ya existe una venta para el producto actual
-      const ventaExistenteIndex = ventasData.ventas.findIndex(venta => venta.producto === producto.producto);
-
-      if (ventaExistenteIndex !== -1) {
-        // Si existe, actualiza la cantidad vendida
-        ventasData.ventas[ventaExistenteIndex].cantidad += parseInt(producto.cantidad);
-      } else {
-        // Si no existe, crea una nueva entrada para la venta
-        ventasData.ventas.push({
-          id: producto.id,
-          producto: producto.producto,
-          cantidad: parseInt(producto.cantidad)
-        });
-      }
+    // Crea una nueva venta
+    const nuevaVenta = new Venta({
+      mesa: mesa || null,
+      productos,
+      total,
+      estado: "pendiente",
+      fecha: new Date()
     });
 
-    // Escribe la lista actualizada en el archivo ventas.json
-    await fs.writeFile(
-      path.join(__dirname, "../data/ventas.json"),
-      JSON.stringify(ventasData, null, 2),
-      "utf-8"
-    );
+    // Guarda la venta en la base de datos
+    const ventaGuardada = await nuevaVenta.save();
 
-    // Envía una respuesta exitosa al frontend
-    res.status(200).json({
-      message: "✅ Registro(s) creado(s) exitosamente",
-      ventas: ventasData.ventas // Envía la lista actualizada de ventas
+    res.status(201).json({
+      msg: 'Venta creada correctamente',
+      venta: ventaGuardada
     });
-
   } catch (error) {
-    console.error("❌ Error al registrar la Venta (backend):", error);
-    // Envía una respuesta de error al frontend
+    console.error("❌ Error al crear la venta:", error);
     res.status(500).json({
-      message: "❌ Error al registrar la Venta (backend)",
-      error: error.message // Envía el mensaje de error al frontend
+      message: "❌ Error al crear la venta",
+      error: error.message
     });
   }
 };
@@ -59,48 +38,45 @@ const crearVenta = async (req, res) => {
 
 // Consultar todas las ventas
 const obtenerVentas = async (req, res) => {
-  // const ventas = await fs.readFile(path.join(__dirname, "./data/ventas.json"));
-  // const ventasJSON = JSON.parse(ventas);
-  // res.json(ventasJSON);
-
   try {
-    // Leer los datos de ventas y productos
-    const ventasData = await fs.readFile(path.join(__dirname, "../data/ventas.json"), "utf-8");
-    const productosData = await fs.readFile(path.join(__dirname, "../data/productos.json"), "utf-8");
-
-    // Parsear los datos JSON
-    const ventasJSON = JSON.parse(ventasData);
-    const productosJSON = JSON.parse(productosData);
-
-    // Realizar la unión de datos
-    const ventasConValores = ventasJSON.ventas.map((venta) => {
-      const productoInfo = productosJSON.productos.find((producto) => producto.producto === venta.producto);
-
-      if (productoInfo) {
-        const vTotalVenta = parseInt(venta.cantidad, 10) * parseInt(productoInfo.valor, 10);
-        return {
-          ...venta,
-          valorUnitario: productoInfo.valor,
-          vTotalVenta,
-        };
-      } else {
-        return venta;
-      }
-    });
-
-    // Devolver los datos con la unión
-    res.json({ ventas: ventasConValores });
+    const ventas = await Venta.find().populate('productos.productoId');
+    res.status(200).json({ ventas });
   } catch (error) {
-    console.error("❌ Error al consultar las ventas:", error);
-    res.status(500).json({
-      message: "❌ Error al consultar las ventas",
-    });
+    res.status(500).json({ message: "Error al obtener las ventas", error });
   }
 
+};
+
+// Terminar Pedido
+const ventaTerminada = async (req, res) => {
+
+  const { id } = req.params;
+  const { estado } = req.body;
+
+  console.log(id);
+
+  try {
+    // Buscar la venta por su ID
+    const venta = await Venta.findById(id);
+
+    if (!venta) {
+      return res.status(404).json({ mensaje: 'Venta no encontrada' });
+    }
+
+    // Actualizar el estado de la venta
+    venta.estado = estado;
+    await venta.save();
+
+    res.status(200).json({ mensaje: 'Estado de la venta actualizado correctamente', venta });
+  } catch (error) {
+    console.error('Error al cambiar el estado de la venta:', error);
+    res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
 
 };
 
 module.exports = {
   crearVenta,
-  obtenerVentas
+  obtenerVentas,
+  ventaTerminada
 }

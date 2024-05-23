@@ -35,10 +35,10 @@ const routes = [
     path: "/ListadoVentas",
     element: <ListadoVentas />,
   },
-/* {
+ {
     path: "/ListadoCocina",
     element: <ListadoCocina />,
-  },*/
+  },
 ];
 
 const router = createBrowserRouter(routes)

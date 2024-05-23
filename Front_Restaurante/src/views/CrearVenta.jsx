@@ -1,71 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid"; // Importa la librería UUID
-import '../App.css'
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import '../App.css';
 
 const CrearVenta = () => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
   const [mesas, setMesas] = useState([]);
-  const [mesaSeleccionado, setMesaSeleccionado] = useState("");
+  const [mesaSeleccionada, setMesaSeleccionada] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [pedido, setPedido] = useState([]);
   const [mensajeRespuesta, setMensajeRespuesta] = useState("");
 
- /* const crearVenta = async (e) => {
-    e.preventDefault();
-
-    if (productoSeleccionado !== "" && cantidad !== "") {
-      const producto = productoSeleccionado
-      const mesa = mesaSeleccionado
-      const id = uuidv4(); // Genera un UUID único
-      console.log("id generado: ", id)
-      try {
-        const response = await fetch(
-          "http://localhost:3500/api/ventas",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id,
-              producto,
-              cantidad,
-              mesa
-            }),
-          }
-        );
-        console.log(response.body);
-        if (response.ok) {
-          setMensajeRespuesta("✅ Registro creado exitosamente");
-        } else {
-          setMensajeRespuesta("❌ Error al registrar la Venta");
-        }
-      } catch (error) {
-        console.error("❌ Error al enviar el formulario:", error);
-        setMensajeRespuesta("❌ Error al registrar la Venta");
-      }
-    } else {
-      setMensajeRespuesta("❌ Faltan campos por diligenciar");
-    }
-  };*/
-
-  // Llamar al servidor y obtener la lista de productos y mesas
   useEffect(() => {
     const obtenerProductos = async () => {
-      const response = await fetch(
-        "http://localhost:3500/api/productos"
-      );
+      const response = await fetch("http://localhost:3500/api/productos");
       const data = await response.json();
       setProductos(data.productos);
     };
 
     const obtenerMesas = async () => {
-      const response = await fetch(
-        "http://localhost:3500/api/mesas"
-      );
+      const response = await fetch("http://localhost:3500/api/mesas");
       const data = await response.json();
       setMesas(data.mesas);
     };
@@ -75,57 +30,63 @@ const CrearVenta = () => {
   }, []);
 
   const agregarProducto = () => {
-    if (productoSeleccionado !== "" && cantidad !== "") {
-      // Verificar si el producto ya existe en el pedido
-      const productoExistente = pedido.find(item => item.producto === productoSeleccionado);
+    if (productoSeleccionado && cantidad) {
+      const productoExistente = pedido.find(item => item.productoId === productoSeleccionado);
       if (productoExistente) {
-        // Actualizar la cantidad del producto existente
-        const cantidadNueva = parseInt(productoExistente.cantidad) + parseInt(cantidad);
-        const pedidoActualizado = pedido.map(item => {
-          if (item.producto === productoSeleccionado) {
-            return { ...item, cantidad: cantidadNueva.toString() };
-          }
-          return item;
-        });
+        const pedidoActualizado = pedido.map(item =>
+          item.productoId === productoSeleccionado
+            ? { ...item, cantidad: item.cantidad + parseInt(cantidad) }
+            : item
+        );
         setPedido(pedidoActualizado);
-        //console.log(pedidoActualizado);
       } else {
-        // Agregar un nuevo producto al pedido
+        const producto = productos.find(p => p._id === productoSeleccionado);
         const nuevoProducto = {
-          id: uuidv4(), // Se genera un nuevo id para el pedido, no para el producto
-          producto: productoSeleccionado,
-          cantidad: cantidad,
-          mesa: mesaSeleccionado
+          productoId: producto._id,
+          nombre: producto.productoN,
+          cantidad: parseInt(cantidad),
+          precio: producto.precio
         };
         setPedido([...pedido, nuevoProducto]);
       }
       setProductoSeleccionado("");
       setCantidad("");
-      setMesaSeleccionado("");
-      setMensajeRespuesta("");
     } else {
       Swal.fire({
         title: "Diligencia los campos!",
         text: "Por favor completa los campos para continuar!",
         icon: "error"
       });
-     }
+    }
   };
-  
+
   const crearVenta = async () => {
+    if (pedido.length === 0) {
+      Swal.fire({
+        title: "Error!",
+        text: "No has agregado productos.",
+        icon: "error"
+      });
+      return;
+    }
+
+    const total = pedido.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+
     try {
-      const response = await fetch(
-        "http://localhost:3500/api/ventas",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productos: pedido,
-          }),
-         }
-      );
+      const response = await fetch("http://localhost:3500/api/ventas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mesa: mesaSeleccionada || null,
+          productos: pedido,
+          total: total,
+          estado: "pendiente",
+          fecha: new Date()
+        }),
+      });
+
       if (response.ok) {
         Swal.fire({
           title: "Pedido Enviado Exitosamente!",
@@ -133,8 +94,7 @@ const CrearVenta = () => {
           icon: "success"
         });
         setPedido([]);
-        setMesaSeleccionado("");
-        console.log(pedido);
+        setMesaSeleccionada("");
       } else {
         setMensajeRespuesta("❌ Error al enviar el pedido");
       }
@@ -156,18 +116,17 @@ const CrearVenta = () => {
           onChange={(e) => setProductoSeleccionado(e.target.value)}
         >
           <option value="">Selecciona un producto</option>
-          {productos.map((producto, index) => (
-            <option key={index} value={producto.producto}>
-              {producto.producto}
+          {productos.map((producto) => (
+            <option key={producto._id} value={producto._id}>
+              {producto.productoN}
             </option>
           ))}
         </select>
 
-
         <select
           className="form-select"
-          value={mesaSeleccionado}
-          onChange={(e) => setMesaSeleccionado(e.target.value)}
+          value={mesaSeleccionada}
+          onChange={(e) => setMesaSeleccionada(e.target.value)}
         >
           <option value="">Selecciona una mesa</option>
           {mesas.map((mesa) => (
@@ -175,15 +134,13 @@ const CrearVenta = () => {
               {mesa.nombre}
             </option>
           ))}
-
         </select>
 
         <input
           className="form-control"
           type="number"
-          name=""
-          id=""
-          placeholder="ingresa la Cantidad..."
+          placeholder="Cantidad"
+          value={cantidad}
           onChange={(e) => setCantidad(e.target.value)}
         />
 
@@ -192,47 +149,40 @@ const CrearVenta = () => {
         </button>
 
         <div>
+          <Link to="/ListadoCocina">
+            <button className="btn btn-secondary">Listado Cocina</button>
+          </Link>
           <Link to="/">
-            <button className="btn btn-secondary" >Regresar</button>
+            <button className="btn btn-secondary">Regresar</button>
           </Link>
           <button className="btn btn-success" onClick={crearVenta}>Crear Venta</button>
         </div>
       </div>
 
       <div>
-        
-      <table className="table table-striped table-hover">
+        <table className="table table-striped table-hover">
           <thead>
             <tr>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Decripcion</th>
-              <th scope="col">Mesa</th>
+              <th>Cantidad</th>
+              <th>Producto</th>
+              <th>Precio Unitario</th>
+              <th>Precio Total</th>
             </tr>
           </thead>
           <tbody>
-            {pedido
-                .slice() // Copia el array para no modificar el original
-                .sort((a, b) => a.cantidad - b.cantidad) // Ordena ascendente por cantidad
-                .map((item) => (
-                  <tr key={item}>
-                  <td>{item.cantidad}</td>
-                  <td>{item.producto}</td>
-                  <td>{item.mesa} </td>
-                </tr>
-                ))
-            }
+            {pedido.map((item) => (
+              <tr key={item.productoId}>
+                <td>{item.cantidad}</td>
+                <td>{item.nombre}</td>
+                <td>{item.precio}</td>
+                <td>{item.precio * item.cantidad}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
-
       </div>
 
-
-
-
-
-      <br />
       {mensajeRespuesta && <p>{mensajeRespuesta}</p>}
-      <br />
     </div>
   );
 };
