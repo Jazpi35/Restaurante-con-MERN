@@ -16,7 +16,7 @@ useEffect(() => {
         
         const data = await response.json();
         if (data && data.usuarios) {
-          console.log(data.usuarios);
+          console.log(data);
           setUsuarios(data.usuarios);
         } else {
           console.error("La respuesta del servidor no tiene la estructura esperada.");

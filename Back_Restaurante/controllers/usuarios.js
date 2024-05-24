@@ -7,7 +7,7 @@ const Usuario = require('../models/usuario');
 
 
 const usuariosGet = async (req, res) => {
-    const { limite = 5, desde = 0 } = req.query;
+    const { limite = 20, desde = 0 } = req.query;
     const query = { estado: true };
 
     try {
