@@ -96,11 +96,20 @@ const CrearVenta = () => {
         setPedido([]);
         setMesaSeleccionada("");
       } else {
-        setMensajeRespuesta("❌ Error al enviar el pedido");
+        Swal.fire({
+          title: "Error al enviar el pedido!",
+          text: "Si el error persiste comunicarse con el administrador!",
+          icon: "error"
+        });
+
       }
     } catch (error) {
       console.error("❌ Error al enviar el pedido:", error);
-      setMensajeRespuesta("❌ Error al enviar el pedido");
+      Swal.fire({
+        title: "Error al enviar el pedido! 2",
+        text: "Si el error persiste comunicarse con el administrador!",
+        icon: "error"
+      });
     }
   };
 

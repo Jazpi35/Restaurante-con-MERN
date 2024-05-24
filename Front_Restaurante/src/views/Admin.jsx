@@ -2,6 +2,7 @@ import "../styles/admin.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
+import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid"; // Importa la librería UUID
 
 const Admin = () => {
@@ -41,21 +42,37 @@ const Admin = () => {
         console.log(response.body);
 
         if (response.ok) {
-          setMensajeRespuesta("✅ Registro creado exitosamente");
+          Swal.fire({
+            title: "Usuario creado exitosamente!",
+            text: "Puede iniciar sesion!",
+            icon: "success"
+          });
           // Limpia los campos del formulario
           setCorreo("");
           setNombre("");
           setPassword("");
           setRol("");
         } else {
-          setMensajeRespuesta("❌ Error al registrar el Usuario");
+          Swal.fire({
+            title: "Error al registrar el usuario!",
+            text: "Si el error persiste comunicarse con el administrador!",
+            icon: "error"
+          });
         }
       } catch (error) {
         console.error("❌ Error al enviar el formulario:", error);
-        setMensajeRespuesta("❌ Error al registrar el Usuario");
+        Swal.fire({
+          title: "Error al registrar el usuario! 2",
+          text: "Si el error persiste comunicarse con el administrador!",
+          icon: "error"
+        });
       }
     } else {
-      setMensajeRespuesta("❌ Faltan campos por diligenciar");
+      Swal.fire({
+        title: "Error al registrar el usuario!",
+        text: "Por favor diligencie todos los campos !",
+        icon: "error"
+      });
     }
   };
 
@@ -82,19 +99,35 @@ const Admin = () => {
         );
         console.log(response.body);
         if (response.ok) {
-          setMensajeRespuesta("✅ Registro creado exitosamente");
+          Swal.fire({
+            title: "Producto creado exitosamente!",
+            text: "Puede seleccionar este!",
+            icon: "success"
+          });
           // Limpia los campos del formulario
           setProductoN("");
           setPrecio("");
         } else {
-          setMensajeRespuesta("❌ Error al registrar el Producto");
+          Swal.fire({
+            title: "Error al registrar el producto! 2",
+            text: "Si el error persiste comunicarse con el administrador!",
+            icon: "error"
+          });
         }
       } catch (error) {
         console.error("❌ Error al enviar el formulario:", error);
-        setMensajeRespuesta("❌ Error al registrar el Producto");
+        Swal.fire({
+          title: "Error al registrar el producto! 2",
+          text: "Si el error persiste comunicarse con el administrador!",
+          icon: "error"
+        });
       }
     } else {
-      setMensajeRespuesta("❌ Faltan campos por diligenciar");
+      Swal.fire({
+        title: "Error al registrar el producto!",
+        text: "Por favor diligencie todos los campos !!",
+        icon: "error"
+      });
     }
   };
 

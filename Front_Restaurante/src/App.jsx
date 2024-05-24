@@ -39,16 +39,28 @@ const App = () => {
           // El usuario tiene el rol de mesero
           goTo("/ListadoCocina");
         } else {
-          setMensajeRespuesta("❌ Usuario incorrecto");
+          Swal.fire({
+            title: "Usuario o Contraseña Incorrecto",
+            text: "por favor validar bien!",
+            icon: "error"
+          });
         }
         
       } catch (error) {
-        setMensajeRespuesta("⚠️ Algo ocurrió al validar el usuario");
+        Swal.fire({
+          title: "Error al ingresar !!",
+          text: "por favor comuniquese con el administrador!",
+          icon: "error"
+        });
         console.error("❌ Error al validar usuario Login:", error);
+        
       }
     } else {
-      setMensajeRespuesta("❌ Debe diligenciar el campo usuario");
-      console.log("❌ Debe diligenciar el campo usuario");
+      Swal.fire({
+        title: "Por favor diligencie los campos !!",
+        text: "por favor comuniquese con el administrador!",
+        icon: "error"
+      });
     }
   };
 
