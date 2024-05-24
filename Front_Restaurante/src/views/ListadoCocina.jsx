@@ -8,7 +8,7 @@ const ListadoCocina = () => {
   
     useEffect(() => {
       const obtenerVentas = async () => {
-        const response = await fetch("http://localhost:3500/api/ventas");
+        const response = await fetch("https://restaurante-con-mern.vercel.app/api/ventas");
         const data = await response.json();
         setVentas(data.ventas);
       };
@@ -16,35 +16,45 @@ const ListadoCocina = () => {
       obtenerVentas();
     }, []);
   
-    const actualizarEstadoVenta = async (id, nuevoEstado) => {
+    const handleEliminar = async (_id) => {
+ 
       try {
-        const response = await fetch(`https://restaurante-con-mern.vercel.app/api/ventas/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            estado: nuevoEstado
-          }),
-        });
+        console.log("enviando terminado venta = ", _id);
+        const response = await fetch(
+          `https://restaurante-con-mern.vercel.app/api/ventas/${_id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
   
         if (response.ok) {
+          setVentas(ventas.filter(ventas => ventas._id !== _id));
           Swal.fire({
-            title: "Estado Actualizado!",
-            text: "El estado de la venta ha sido actualizado.",
+            title: "Pedido Terminado Exitosamente!",
+            text: "Este pedido fue entregado!",
             icon: "success"
           });
-          setVentas(ventas.map(venta => venta._id === id ? { ...venta, estado: nuevoEstado } : venta));
-        } else {
+          //console.log("✅ Usuario eliminado exitosamente");
+        } else if (response.status === 404) {
+          //setMensajeRespuesta("❌ Usuario no encontrado. Ingrese un usuario válido");
+          //console.log("❌ Usuario no encontrado");
           Swal.fire({
-            title: "Error!",
-            text: "No se pudo actualizar el estado de la venta.",
+            title: "Pedido no encontrado!",
+            text: "Por favor seleccione un pedido valido!",
             icon: "error"
           });
+        } else {
+          setMensajeRespuesta("❌ Error al terminar venta 1");
+          console.log("❌ Error al terminar venta 1");
         }
       } catch (error) {
-        console.error("❌ Error al actualizar el estado de la venta:", error);
+        setMensajeRespuesta("❌ Error al terminar venta 2 ");
+        console.log("❌ Error al terminar venta 2");
       }
+  
     };
   
     return (
@@ -79,7 +89,7 @@ const ListadoCocina = () => {
                   <td>
                     <button
                       className="btn btn-primary"
-                      onClick={() => actualizarEstadoVenta(venta._id, "terminada")}
+                      onClick={() => handleEliminar(venta._id,)}
                     >
                       Terminado
                     </button>

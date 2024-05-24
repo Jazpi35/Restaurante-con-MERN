@@ -13,7 +13,7 @@ router.get('/', obtenerVentas);
 
 router.post('/', crearVenta );
 
-router.put('/:id', ventaTerminada);
+router.delete('/:id', ventaTerminada);
 
 
 module.exports = router;

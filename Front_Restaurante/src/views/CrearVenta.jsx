@@ -82,7 +82,7 @@ const CrearVenta = () => {
           mesa: mesaSeleccionada || null,
           productos: pedido,
           total: total,
-          estado: "pendiente",
+          estado: true,
           fecha: new Date()
         }),
       });

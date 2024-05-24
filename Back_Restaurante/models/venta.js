@@ -31,9 +31,8 @@ const VentaSchema = Schema({
         required: true
     },
     estado: {
-        type: String,
-        enum: ['pendiente', 'en preparación', 'completada'],
-        default: 'pendiente'
+        type: Boolean,
+        default: true
     },
     fecha: {
         type: Date,
