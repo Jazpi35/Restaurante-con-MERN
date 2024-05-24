@@ -15,7 +15,7 @@ const App = () => {
       
       try {
         const response = await fetch(
-          'http://localhost:3500/api/auth/login',{
+          'https://restaurante-con-mern.vercel.app/api/auth/login',{
             method: 'POST',
             headers:{
               'Content-Type': 'application/json'
