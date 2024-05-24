@@ -17,7 +17,7 @@ const ListadoCocina = () => {
     }, []);
   
     const handleEliminar = async (_id) => {
- 
+      console.log(_id); 
       try {
         console.log("enviando terminado venta = ", _id);
         const response = await fetch(

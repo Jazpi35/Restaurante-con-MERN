@@ -5,7 +5,7 @@ const Venta = require('../models/venta');
 // Crear una venta
 const crearVenta = async (req, res) => {
   try {
-    const { mesa, productos } = req.body;
+    const { mesa, productos , estado } = req.body;
 
     // Calcula el total de la venta
     const total = productos.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
@@ -15,7 +15,7 @@ const crearVenta = async (req, res) => {
       mesa: mesa || null,
       productos,
       total,
-      estado: "pendiente",
+      estado,
       fecha: new Date()
     });
 

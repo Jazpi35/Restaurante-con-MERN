@@ -30,7 +30,7 @@ const VentaSchema = Schema({
         type: Number,
         required: true
     },
-    estado: {
+    estado : {
         type: Boolean,
         default: true
     },
