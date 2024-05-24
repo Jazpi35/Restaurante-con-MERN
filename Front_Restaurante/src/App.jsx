@@ -82,5 +82,5 @@ const App = () => {
     </div>
   );
 };
-
+/*Todo esta funcional*/
 export default App;
