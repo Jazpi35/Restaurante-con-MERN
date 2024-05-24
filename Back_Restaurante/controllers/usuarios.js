@@ -9,22 +9,20 @@ const Usuario = require('../models/usuario');
 const usuariosGet = async (req, res) => {
     const { limite = 5, desde = 0 } = req.query;
     const query = { estado: true };
-    // Enviamos desde la url desde que usuario hasta donde mostrar
-    // Se utiliza la promesa por que ejecuta los dos await al mismo tiempo
-    // y no dispara hasta que no acabe
 
-    const [total, usuarios] = await Promise.all([
-        Usuario.countDocuments(query),
-        Usuario.find(query)
+    try {
+        const usuarios = await Usuario.find(query)
             .skip(Number(desde))
-            .limit(Number(limite))
-    ]);
+            .limit(Number(limite));
 
-    res.json({
-        total,
-        usuarios
-    });
-}
+        res.json({
+            total: usuarios.length,
+            usuarios
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Hubo un error al obtener los usuarios' });
+    }
+};
 
 const usuariosPost = async (req, res = response) => {
 
