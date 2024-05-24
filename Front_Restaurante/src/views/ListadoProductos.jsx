@@ -10,7 +10,7 @@ const ListadoProductos = () => {
     const obtenerListProduct = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3500/api/productos"
+          "https://restaurante-con-mern.vercel.app/api/productos"
         );
         
         const data = await response.json();
@@ -34,7 +34,7 @@ const ListadoProductos = () => {
       console.log("enviando delete Producto = ", _id);
       
       const response = await fetch(
-        `http://localhost:3500/api/productos/${_id}`,
+        `https://restaurante-con-mern.vercel.app/api/productos${_id}`,
         {
           method: "DELETE",
           headers: {

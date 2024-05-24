@@ -23,7 +23,7 @@ const Admin = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:3500/api/usuarios",
+          "https://restaurante-con-mern.vercel.app/api/usuarios",
           {
             method: "POST",
             headers: {
@@ -67,7 +67,7 @@ const Admin = () => {
       try {
         console.log(productoN,precio);
         const response = await fetch(
-          "http://localhost:3500/api/productos",
+          "https://restaurante-con-mern.vercel.app/api/productos",
           {
             method: "POST",
             headers: {

@@ -18,7 +18,7 @@ const ListadoCocina = () => {
   
     const actualizarEstadoVenta = async (id, nuevoEstado) => {
       try {
-        const response = await fetch(`http://localhost:3500/api/ventas/${id}`, {
+        const response = await fetch(`https://restaurante-con-mern.vercel.app/api/ventas${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

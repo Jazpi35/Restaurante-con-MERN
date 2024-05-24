@@ -9,7 +9,7 @@ const ListadoVentas = () => {
     const obtenerListVentas = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3500/api/ventas"
+          "https://restaurante-con-mern.vercel.app/api/ventas"
         );
         const data = await response.json();
         setVentas(data.ventas);

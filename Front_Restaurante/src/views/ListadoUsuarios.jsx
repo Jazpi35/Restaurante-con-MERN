@@ -11,7 +11,7 @@ useEffect(() => {
     const obtenerListUsers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3500/api/usuarios/`
+          `https://restaurante-con-mern.vercel.app/api/usuarios`
         );
         
         const data = await response.json();
@@ -34,7 +34,7 @@ useEffect(() => {
     try {
       console.log("enviando delete Usuario = ", _id);
       const response = await fetch(
-        `http://localhost:3500/api/usuarios/${_id}`,
+        `https://restaurante-con-mern.vercel.app/api/usuarios${_id}`,
         {
           method: "DELETE",
           headers: {

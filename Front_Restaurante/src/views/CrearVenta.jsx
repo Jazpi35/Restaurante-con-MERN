@@ -14,13 +14,13 @@ const CrearVenta = () => {
 
   useEffect(() => {
     const obtenerProductos = async () => {
-      const response = await fetch("http://localhost:3500/api/productos");
+      const response = await fetch("https://restaurante-con-mern.vercel.app/api/productos");
       const data = await response.json();
       setProductos(data.productos);
     };
 
     const obtenerMesas = async () => {
-      const response = await fetch("http://localhost:3500/api/mesas");
+      const response = await fetch("https://restaurante-con-mern.vercel.app/api/mesas");
       const data = await response.json();
       setMesas(data.mesas);
     };
@@ -73,7 +73,7 @@ const CrearVenta = () => {
     const total = pedido.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
 
     try {
-      const response = await fetch("http://localhost:3500/api/ventas", {
+      const response = await fetch("https://restaurante-con-mern.vercel.app/api/ventas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
