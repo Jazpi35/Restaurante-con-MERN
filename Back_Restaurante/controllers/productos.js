@@ -50,7 +50,7 @@ const crearProducto = async (req, res) => {
 
 // Consulta todos los productos
 const obtenerProductos = async (req, res) => {
-  const { limite = 15, desde = 0 } = req.query;
+  const { limite = 50, desde = 0 } = req.query;
   const query = { estado: true };
 
   try {
